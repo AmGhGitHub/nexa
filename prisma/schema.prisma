@@ -10,23 +10,30 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Scope1_StationaryComsbution {
-  id                  Int                                  @id @default(autoincrement())
+model S1_stationary_comsbution {
+  id                  Int                             @id @default(autoincrement())
   fuel_type_id        Int
-  fuel_subtype        String                               @db.VarChar(255)
+  fuel_subtype        String                          @db.VarChar(255)
   heat_content_value  Float?
   co2_emission_factor Float
   ch4_emission_factor Float
   n2o_emission_factor Float
-  fuel_type           Scope1_StationaryComsbution_FuelType @relation(fields: [fuel_type_id], references: [fuel_type_id])
+  fuel_type           S1_stationary_comsbution_lookup @relation(fields: [fuel_type_id], references: [fuel_type_id])
 }
 
-model Scope1_StationaryComsbution_FuelType {
-  fuel_type_id                Int                           @id
-  fuel_type                   String                        @db.VarChar(255)
-  heat_content_unit           String?                       @db.VarChar(255)
-  co2_emission_unit           String                        @db.VarChar(255)
-  ch4_emission_unit           String                        @db.VarChar(255)
-  n2o_emission_unit           String                        @db.VarChar(255)
-  Scope1_StationaryComsbution Scope1_StationaryComsbution[]
+model S1_stationary_comsbution_lookup {
+  fuel_type_id                Int                        @id
+  fuel_type                   String                     @db.VarChar(255)
+  heat_content_unit           String?                    @db.VarChar(255)
+  co2_emission_unit           String                     @db.VarChar(255)
+  ch4_emission_unit           String                     @db.VarChar(255)
+  n2o_emission_unit           String                     @db.VarChar(255)
+  Scope1_StationaryComsbution S1_stationary_comsbution[]
+}
+
+model S1_mobile_combustion {
+  id              Int    @id @default(autoincrement())
+  fuel_type       String
+  emission_factor Float
+  emission_unit   String
 }
