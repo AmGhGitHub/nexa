@@ -1,41 +1,21 @@
 "use client";
 
-import { Scope1_StationaryComsbution } from "@prisma/client";
+import { St_Combus_HeatCont, St_Combus_Emis } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
-export const columns: ColumnDef<Scope1_StationaryComsbution>[] = [
-  { accessorKey: "fuel_type.fuel_type", header: "Fuel Type" },
+export const col_St_Combus_HeatContent: ColumnDef<St_Combus_HeatCont>[] = [
+  { accessorKey: "fuelInfo.fuelType", header: "Fuel Type" },
+  { accessorKey: "fuelInfo.fuelSubtype", header: "Fuel SubType" },
+  { accessorKey: "heatContentValue", header: "Heat Content Value" },
+  { accessorKey: "heatContentUnit.unit", header: "Heat Content Unit" },
+];
 
-  {
-    accessorKey: "fuel_subtype",
-    header: "Fuel Subtype",
-  },
-  {
-    accessorKey: "heat_content_value",
-    header: "Heat Content Value",
-  },
-  { accessorKey: "fuel_type.heat_content_unit", header: "Heat Content Unit" },
-  {
-    accessorKey: "co2_emission_factor",
-    header: "CO2 EF",
-  },
-  {
-    accessorKey: "fuel_type.co2_emission_unit",
-    header: "CO2 EF Unit",
-  },
-  {
-    accessorKey: "ch4_emission_factor",
-    header: "CH4 EF",
-  },
-  {
-    accessorKey: "fuel_type.ch4_emission_unit",
-    header: "CH4 EF Unit",
-  },
-  {
-    accessorKey: "n2o_emission_factor",
-    header: "N2O EF",
-  },
-  {
-    accessorKey: "fuel_type.n2o_emission_unit",
-    header: "N2O EF Unit",
-  },
+export const col_St_Combus_Emis: ColumnDef<St_Combus_Emis>[] = [
+  { accessorKey: "fuelInfo.fuelType", header: "Fuel Type" },
+  { accessorKey: "fuelInfo.fuelSubtype", header: "Fuel SubType" },
+  { accessorKey: "co2EmisFct", header: "CO2 Emis Factor" },
+  { accessorKey: "co2EmisUnit.unit", header: "CO2 Emis Unit" },
+  { accessorKey: "ch4EmisFct", header: "CH4 Emis Factor" },
+  { accessorKey: "ch4EmisUnit.unit", header: "CH4 Emis Unit" },
+  { accessorKey: "n2oEmisFct", header: "N2O Emis Factor" },
+  { accessorKey: "n2oEmisUnit.unit", header: "N2O Emis Unit" },
 ];

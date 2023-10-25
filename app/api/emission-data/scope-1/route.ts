@@ -1,15 +1,24 @@
-import { Scope1_StationaryComsbution } from "@prisma/client";
+import { St_Combus_HeatCont, St_Combus_Emis } from "@prisma/client";
 import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
-  const stationary_emissions =
-    await prisma.scope1_StationaryComsbution.findMany({
-      include: { fuel_type: true },
-    });
+  const st_combus_heat_cont = await prisma.st_Combus_HeatCont.findMany({
+    include: { fuelInfo: true, heatContentUnit: true },
+  });
 
-  // const stationary_emissions_fueltype =
-  //   await prisma.scope1_StationaryComsbution_FuelType.findMany({});
+  const st_combus_emis = await prisma.st_Combus_Emis.findMany({
+    where: { emissionBase: "HEAT_CONTENT" },
+    include: {
+      fuelInfo: true,
+      co2EmisUnit: true,
+      ch4EmisUnit: true,
+      n2oEmisUnit: true,
+    },
+  });
 
-  return NextResponse.json(stationary_emissions);
+  return NextResponse.json({
+    heatContentData: st_combus_heat_cont,
+    emissionData: st_combus_emis,
+  });
 }

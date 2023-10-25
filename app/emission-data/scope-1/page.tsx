@@ -1,7 +1,6 @@
 import axios from "axios";
-import { columns } from "./columns";
+import { col_St_Combus_Emis, col_St_Combus_HeatContent } from "./columns";
 import { DataTable } from "./data-table";
-import { Scope1_StationaryComsbution } from "@prisma/client";
 
 const page = async () => {
   const data = await axios
@@ -13,7 +12,15 @@ const page = async () => {
       <h1 className="mb-3 font-semibold text-xl text-emerald-700">
         Scope-1 Reference Data
       </h1>
-      <DataTable columns={columns} data={data} />
+      <DataTable
+        columns={col_St_Combus_HeatContent}
+        data={data.heatContentData}
+      />
+
+      <h1 className="mb-3 font-semibold text-xl text-emerald-700">
+        Scope-1 Reference Data
+      </h1>
+      <DataTable columns={col_St_Combus_Emis} data={data.emissionData} />
     </div>
   );
 };
