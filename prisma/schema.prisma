@@ -10,30 +10,66 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model S1_stationary_comsbution {
-  id                  Int                             @id @default(autoincrement())
-  fuel_type_id        Int
-  fuel_subtype        String                          @db.VarChar(255)
-  heat_content_value  Float?
-  co2_emission_factor Float
-  ch4_emission_factor Float
-  n2o_emission_factor Float
-  fuel_type           S1_stationary_comsbution_lookup @relation(fields: [fuel_type_id], references: [fuel_type_id])
+model S1StationaryCombustionByHeatContent {
+  id                          Int                        @id @default(autoincrement())
+  fuel_type_id                Int
+  fuel_subtype                String                     @db.VarChar(255)
+  heat_content_value          Float?
+  co2_emission_factor         Float
+  co2_emission_factor_unit_id Int?
+  ch4_emission_factor         Float
+  ch4_emission_factor_unit_id Int?
+  n2o_emission_factor         Float
+  n2o_emission_factor_unit_id Int?
+  fuel_type_info              S1StationaryCombustionFuel @relation("FuleTypeInfoByHeatContent", fields: [fuel_type_id], references: [fuel_type_id])
+
+  co2_emission_factor_unit Unit? @relation("CO2EmissionUnitRelation", fields: [co2_emission_factor_unit_id], references: [id])
+  ch4_emission_factor_unit Unit? @relation("CH4EmissionUnitRelation", fields: [ch4_emission_factor_unit_id], references: [id])
+  n2o_emission_factor_unit Unit? @relation("N2OEmissionUnitRelation", fields: [n2o_emission_factor_unit_id], references: [id])
 }
 
-model S1_stationary_comsbution_lookup {
-  fuel_type_id                Int                        @id
-  fuel_type                   String                     @db.VarChar(255)
-  heat_content_unit           String?                    @db.VarChar(255)
-  co2_emission_unit           String                     @db.VarChar(255)
-  ch4_emission_unit           String                     @db.VarChar(255)
-  n2o_emission_unit           String                     @db.VarChar(255)
-  Scope1_StationaryComsbution S1_stationary_comsbution[]
+model S1StationaryCombustionByQuantity {
+  id                          Int                        @id @default(autoincrement())
+  fuel_type_id                Int
+  fuel_subtype                String                     @db.VarChar(255)
+  heat_content_value          Float?
+  co2_emission_factor         Float
+  co2_emission_factor_unit_id Int?
+  ch4_emission_factor         Float
+  ch4_emission_factor_unit_id Int?
+  n2o_emission_factor         Float
+  n2o_emission_factor_unit_id Int?
+  fuel_type_info              S1StationaryCombustionFuel @relation("FuleTypeInfoByQuntity", fields: [fuel_type_id], references: [fuel_type_id])
+
+  co2_emission_factor_unit Unit? @relation("CO2EmissionUnitRelation", fields: [co2_emission_factor_unit_id], references: [id])
+  ch4_emission_factor_unit Unit? @relation("CH4EmissionUnitRelation", fields: [ch4_emission_factor_unit_id], references: [id])
+  n2o_emission_factor_unit Unit? @relation("N2OEmissionUnitRelation", fields: [n2o_emission_factor_unit_id], references: [id])
 }
 
-model S1_mobile_combustion {
-  id              Int    @id @default(autoincrement())
-  fuel_type       String
-  emission_factor Float
-  emission_unit   String
+model S1StationaryCombustionFuel {
+  fuel_type_id                    Int                                   @id
+  fuel_type                       String                                @db.VarChar(255)
+  heat_content_unit               String?                               @db.VarChar(255)
+  fuel_type_info_by_heat_content  S1StationaryCombustionByHeatContent[] @relation("FuleTypeInfoByHeatContent")
+  fuel_type_info_by_heat_quantity S1StationaryCombustionByQuantity[]    @relation("FuleTypeInfoByQuntity")
+}
+
+model Unit {
+  id                          Int                                   @id
+  unit                        String
+  co2_ef_unit_by_heat_content S1StationaryCombustionByHeatContent[] @relation("CO2EmissionUnitRelation")
+  ch4_ef_unit_by_heat_content S1StationaryCombustionByHeatContent[] @relation("CH4EmissionUnitRelation")
+  n2o_ef_unit_by_heat_content S1StationaryCombustionByHeatContent[] @relation("N2OEmissionUnitRelation")
+  co2_ef_unit_by_quantity     S1StationaryCombustionByQuantity[]    @relation("CO2EmissionUnitRelation")
+  ch4_ef_unit_by_quantity     S1StationaryCombustionByQuantity[]    @relation("CH4EmissionUnitRelation")
+  n2o_ef_unit_by_quantity     S1StationaryCombustionByQuantity[]    @relation("N2OEmissionUnitRelation")
+  S1MobileCombustion          S1MobileCombustion[]
+}
+
+model S1MobileCombustion {
+  id               Int    @id @default(autoincrement())
+  fuel_type        String
+  emission_factor  Float
+  emission_unit_id Int
+  emission_unit    Unit   @relation(fields: [emission_unit_id], references: [id])
 }
