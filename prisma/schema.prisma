@@ -14,8 +14,7 @@ type StCombusHcEmisCh4 {
 
 type StCombusHcEmisCo2 {
   emisUnit  String
-  /// Multiple data types found: Float: 95.2%, Int: 4.8% out of 63 sampled entries
-  emisValue Json
+  emisValue Float
 }
 
 type StCombusHcEmisN2O {
@@ -23,20 +22,19 @@ type StCombusHcEmisN2O {
   emisValue Float
 }
 
+model st_combus_hc {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  fuelSubtype String
+  fuelType    String
+  hcUnit      String
+  hcValue     Float
+}
+
 model st_combus_hc_emis {
   id          String            @id @default(auto()) @map("_id") @db.ObjectId
-  fuelType    String
-  fuelSubtype String
   CH4         StCombusHcEmisCh4
   CO2         StCombusHcEmisCo2
   N2O         StCombusHcEmisN2O
-}
-
-model st_combus_heat_content {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
-  fuelSubType String
+  fuelSubtype String
   fuelType    String
-  /// Multiple data types found: Float: 93.1%, Int: 6.9% out of 58 sampled entries
-  heatContent Json
-  unit        String
 }
