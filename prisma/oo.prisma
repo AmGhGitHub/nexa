@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// Represents data related to stationary combustion heat contents
+
+model St_Combus_HeatCont {
+  id                Int         @id @default(autoincrement())
+  fuelTypeId        Int
+  heatContentValue  Float
+  heatContentUnitId Int
+  heatContentUnit   Unit       @relation(fields: [heatContentUnitId], references: [id])
+  fuelInfo          Combus_Fuel @relation(fields: [fuelTypeId], references: [fuelTypeId])
+}
+
+// Represents different fuel types related to stationary combustion
+model Combus_Fuel {
+  fuelTypeId           Int                  @id
+  fuelType             String               @db.VarChar(255)
+  fuelSubtype          String               @db.VarChar(255)
+  relatedHeatContent   St_Combus_HeatCont[]
+  StationaryCombustion St_Combus_Emis[]
+
+  @@unique([fuelType, fuelSubtype])
+}
+
+// Represents data related to stationary combustion emissions
+model St_Combus_Emis {
+  id               Int          @id @default(autoincrement())
+  fuelTypeId       Int
+  emissionBase     EmissionBase
+  co2EmisFct       Float
+  co2EmisFctUnitId Int
+  ch4EmisFct       Float
+  ch4EmisFctUnitId Int
+  n2oEmisFct       Float
+  n2oEmisFctUnitId Int
+  fuelInfo         Combus_Fuel  @relation(fields: [fuelTypeId], references: [fuelTypeId])
+  co2EmisUnit      Unit?        @relation("CO2EmissionUnitRelation", fields: [co2EmisFctUnitId], references: [id])
+  ch4EmisUnit      Unit?        @relation("CH4EmissionUnitRelation", fields: [ch4EmisFctUnitId], references: [id])
+  n2oEmisUnit      Unit?        @relation("N2OEmissionUnitRelation", fields: [n2oEmisFctUnitId], references: [id])
+}
+
+// Represents the different types of emissions
+enum EmissionBase {
+  HEAT_CONTENT
+  QUANTITY
+}
+
+// Represents the units used for different types of emissions
+model Unit {
+  id                      Int                  @id
+  unit                    String
+  relatedCO2EmisUnit      St_Combus_Emis[]     @relation("CO2EmissionUnitRelation")
+  relatedCH4EmisUnit      St_Combus_Emis[]     @relation("CH4EmissionUnitRelation")
+  relatedN2OEmisUnit      St_Combus_Emis[]     @relation("N2OEmissionUnitRelation")
+  relatedStCombusHeatCont St_Combus_HeatCont[]
+}

@@ -1,66 +1,42 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
-// Represents data related to stationary combustion heat contents
-
-model St_Combus_HeatCont {
-  id                Int         @id @default(autoincrement())
-  fuelTypeId        Int
-  heatContentValue  Float
-  heatContentUnitId Int
-  heatContentUnit   Unit       @relation(fields: [heatContentUnitId], references: [id])
-  fuelInfo          Combus_Fuel @relation(fields: [fuelTypeId], references: [fuelTypeId])
+type StCombusHcEmisCh4 {
+  emisUnit  String
+  emisValue Float
 }
 
-// Represents different fuel types related to stationary combustion
-model Combus_Fuel {
-  fuelTypeId           Int                  @id
-  fuelType             String               @db.VarChar(255)
-  fuelSubtype          String               @db.VarChar(255)
-  relatedHeatContent   St_Combus_HeatCont[]
-  StationaryCombustion St_Combus_Emis[]
-
-  @@unique([fuelType, fuelSubtype])
+type StCombusHcEmisCo2 {
+  emisUnit  String
+  /// Multiple data types found: Float: 95.2%, Int: 4.8% out of 63 sampled entries
+  emisValue Json
 }
 
-// Represents data related to stationary combustion emissions
-model St_Combus_Emis {
-  id               Int          @id @default(autoincrement())
-  fuelTypeId       Int
-  emissionBase     EmissionBase
-  co2EmisFct       Float
-  co2EmisFctUnitId Int
-  ch4EmisFct       Float
-  ch4EmisFctUnitId Int
-  n2oEmisFct       Float
-  n2oEmisFctUnitId Int
-  fuelInfo         Combus_Fuel  @relation(fields: [fuelTypeId], references: [fuelTypeId])
-  co2EmisUnit      Unit?        @relation("CO2EmissionUnitRelation", fields: [co2EmisFctUnitId], references: [id])
-  ch4EmisUnit      Unit?        @relation("CH4EmissionUnitRelation", fields: [ch4EmisFctUnitId], references: [id])
-  n2oEmisUnit      Unit?        @relation("N2OEmissionUnitRelation", fields: [n2oEmisFctUnitId], references: [id])
+type StCombusHcEmisN2O {
+  emisUnit  String
+  emisValue Float
 }
 
-// Represents the different types of emissions
-enum EmissionBase {
-  HEAT_CONTENT
-  QUANTITY
+model st_combus_hc_emis {
+  id          String            @id @default(auto()) @map("_id") @db.ObjectId
+  fuelType    String
+  fuelSubtype String
+  CH4         StCombusHcEmisCh4
+  CO2         StCombusHcEmisCo2
+  N2O         StCombusHcEmisN2O
 }
 
-// Represents the units used for different types of emissions
-model Unit {
-  id                      Int                  @id
-  unit                    String
-  relatedCO2EmisUnit      St_Combus_Emis[]     @relation("CO2EmissionUnitRelation")
-  relatedCH4EmisUnit      St_Combus_Emis[]     @relation("CH4EmissionUnitRelation")
-  relatedN2OEmisUnit      St_Combus_Emis[]     @relation("N2OEmissionUnitRelation")
-  relatedStCombusHeatCont St_Combus_HeatCont[]
+model st_combus_heat_content {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  fuelSubType String
+  fuelType    String
+  /// Multiple data types found: Float: 93.1%, Int: 6.9% out of 58 sampled entries
+  heatContent Json
+  unit        String
 }

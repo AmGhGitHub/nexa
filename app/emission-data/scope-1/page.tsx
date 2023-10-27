@@ -9,18 +9,26 @@ const page = async () => {
 
   return (
     <div className="container mx-auto">
-      <h1 className="mb-3 font-semibold text-xl text-emerald-700">
-        Scope-1 Reference Data
+      <h1 className="my-5 font-semibold text-5xl text-red-900 text-center">
+        Scope-1 Fuel Data
       </h1>
+      <h2 className="my-5 font-semibold text-xl text-emerald-700">
+        Heat Content Data
+      </h2>
       <DataTable
         columns={col_St_Combus_HeatContent}
         data={data.heatContentData}
       />
 
-      <h1 className="mb-3 font-semibold text-xl text-emerald-700">
-        Scope-1 Reference Data
-      </h1>
-      <DataTable columns={col_St_Combus_Emis} data={data.emissionData} />
+      <h2 className="my-5 font-semibold text-xl text-emerald-700">
+        Emission Factors by Heat Content
+      </h2>
+      <DataTable columns={col_St_Combus_Emis} data={data.emisDataHcBased} />
+
+      {/* <h2 className="my-5 font-semibold text-xl text-emerald-700">
+        Emission Factors by Quantity
+      </h2>
+      <DataTable columns={col_St_Combus_Emis} data={data.emisDataQuantBased} /> */}
     </div>
   );
 };
