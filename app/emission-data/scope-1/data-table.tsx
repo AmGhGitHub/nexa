@@ -1,4 +1,5 @@
 "use client";
+import { Input } from "@/components/ui/input";
 
 import * as React from "react";
 import {
@@ -31,11 +32,16 @@ import { DataTablePagination } from "./data-table-pagination";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  filterNames?: {
+    name: string;
+    placeholder: string;
+  }[];
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  filterNames,
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
@@ -69,7 +75,27 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="space-y-4">
-      {/* <DataTableToolbar table={table} /> */}
+      <div className="flex items-center py-4 space-x-5">
+        {filterNames &&
+          filterNames.map((filterName) => (
+            <Input
+              key={filterName.name}
+              placeholder={filterName.placeholder}
+              value={
+                (table
+                  .getColumn(filterName.name)
+                  ?.getFilterValue() as string) ?? ""
+              }
+              onChange={(event) =>
+                table
+                  .getColumn(filterName.name)
+                  ?.setFilterValue(event.target.value)
+              }
+              className="max-w-[250px]"
+            />
+          ))}
+      </div>
+
       <div className="rounded-md border">
         <Table className="overflow-x-auto">
           <TableHeader>

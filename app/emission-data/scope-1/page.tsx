@@ -1,5 +1,9 @@
 import axios from "axios";
-import { col_St_Combus_Emis, col_St_Combus_HeatContent } from "./columns";
+import {
+  colStCombusHCEmis,
+  colStCombusHC,
+  colStCombusQuantEmis,
+} from "./columns";
 import { DataTable } from "./data-table";
 
 const page = async () => {
@@ -16,19 +20,33 @@ const page = async () => {
         Heat Content Data
       </h2>
       <DataTable
-        columns={col_St_Combus_HeatContent}
+        columns={colStCombusHC}
         data={data.heatContentData}
+        filterNames={[
+          { name: "fuelType", placeholder: "Fuel Type..." },
+          { name: "fuelSubtype", placeholder: "Fuel SubType.." },
+        ]}
       />
 
       <h2 className="my-5 font-semibold text-xl text-emerald-700">
         Emission Factors by Heat Content
       </h2>
-      <DataTable columns={col_St_Combus_Emis} data={data.emisDataHcBased} />
+      <DataTable
+        columns={colStCombusHCEmis}
+        data={data.emisDataHcBased}
+        filterNames={[
+          { name: "fuelType", placeholder: "Fuel Type..." },
+          { name: "fuelSubtype", placeholder: "Fuel SubType.." },
+        ]}
+      />
 
-      {/* <h2 className="my-5 font-semibold text-xl text-emerald-700">
+      <h2 className="my-5 font-semibold text-xl text-emerald-700">
         Emission Factors by Quantity
       </h2>
-      <DataTable columns={col_St_Combus_Emis} data={data.emisDataQuantBased} /> */}
+      <DataTable
+        columns={colStCombusQuantEmis}
+        data={data.st_combus_quant_emis}
+      />
     </div>
   );
 };
