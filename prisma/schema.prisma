@@ -7,6 +7,127 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+type ElectricityCanadaEmisTotalOutput {
+  CH4 ElectricityCanadaEmisTotalOutputCh4
+  CO2 ElectricityCanadaEmisTotalOutputCo2
+  N2O ElectricityCanadaEmisTotalOutputN2O
+}
+
+type ElectricityCanadaEmisTotalOutputCh4 {
+  emisUnit  String
+  emisValue Float
+}
+
+type ElectricityCanadaEmisTotalOutputCo2 {
+  emisUnit  String
+  emisValue Float
+}
+
+type ElectricityCanadaEmisTotalOutputN2O {
+  emisUnit  String
+  emisValue Float
+}
+
+type ElectricityUsEmisNonBaseload {
+  CH4 ElectricityUsEmisNonBaseloadCh4
+  CO2 ElectricityUsEmisNonBaseloadCo2
+  N2O ElectricityUsEmisNonBaseloadN2O
+}
+
+type ElectricityUsEmisNonBaseloadCh4 {
+  emisUnit  String
+  emisValue Float
+}
+
+type ElectricityUsEmisNonBaseloadCo2 {
+  emisUnit  String
+  emisValue Float
+}
+
+type ElectricityUsEmisNonBaseloadN2O {
+  emisUnit  String
+  emisValue Float
+}
+
+type ElectricityUsEmisTotalOutput {
+  CH4 ElectricityUsEmisTotalOutputCh4
+  CO2 ElectricityUsEmisTotalOutputCo2
+  N2O ElectricityUsEmisTotalOutputN2O
+}
+
+type ElectricityUsEmisTotalOutputCh4 {
+  emisUnit  String
+  emisValue Float
+}
+
+type ElectricityUsEmisTotalOutputCo2 {
+  emisUnit  String
+  emisValue Float
+}
+
+type ElectricityUsEmisTotalOutputN2O {
+  emisUnit  String
+  emisValue Float
+}
+
+type MbCombusCh4N2OEmisCh4 {
+  emisUnit  String
+  emisValue Float
+}
+
+type MbCombusCh4N2OEmisN2O {
+  emisUnit  String
+  emisValue Float
+}
+
+type MbCombusCo2EmisCo2 {
+  emisUnit  String
+  emisValue Float
+}
+
+type Scp3Cat4UpstreamTransCat9DownstreamTransCh4 {
+  emisUnit  String
+  emisValue Float
+}
+
+type Scp3Cat4UpstreamTransCat9DownstreamTransCo2 {
+  emisUnit  String
+  emisValue Float
+}
+
+type Scp3Cat4UpstreamTransCat9DownstreamTransN2O {
+  emisUnit  String
+  emisValue Float
+}
+
+type Scp3Cat5WasteOpsCat12EndlifeSoldPrdEmisValue {
+  anaerobicallyDigested Scp3Cat5WasteOpsCat12EndlifeSoldPrdEmisValueAnaerobicallyDigested?
+  combusted             Float?
+  composted             Float?
+  landfilled            Float
+  recycled              Float?
+}
+
+type Scp3Cat5WasteOpsCat12EndlifeSoldPrdEmisValueAnaerobicallyDigested {
+  dry Float
+  wet Float?
+}
+
+type Scp3Cat6BusinTravelCat7EmpCommuteCh4 {
+  emisUnit  String
+  emisValue Float
+}
+
+type Scp3Cat6BusinTravelCat7EmpCommuteCo2 {
+  emisUnit  String
+  emisValue Float
+}
+
+type Scp3Cat6BusinTravelCat7EmpCommuteN2O {
+  emisUnit  String
+  emisValue Float
+}
+
 type StCombusHcEmisCh4 {
   emisUnit  String
   emisValue Float
@@ -20,6 +141,100 @@ type StCombusHcEmisCo2 {
 type StCombusHcEmisN2O {
   emisUnit  String
   emisValue Float
+}
+
+type StCombusQuantEmisCh4 {
+  emisUnit  String
+  emisValue Float
+}
+
+type StCombusQuantEmisCo2 {
+  emisUnit  String
+  emisValue Float
+}
+
+type StCombusQuantEmisN2O {
+  emisUnit  String
+  emisValue Float
+}
+
+type SteamEmisCh4 {
+  emisUnit  String
+  emisValue Float
+}
+
+type SteamEmisCo2 {
+  emisUnit  String
+  emisValue Float
+}
+
+type SteamEmisN2O {
+  emisUnit  String
+  emisValue Float
+}
+
+model blended_refrigerants_gwp {
+  id               String @id @default(auto()) @map("_id") @db.ObjectId
+  blendComposition String
+  codeASHRAE       String
+  gwp              Float
+}
+
+model electricity_canada_emis {
+  id                        String                           @id @default(auto()) @map("_id") @db.ObjectId
+  ElectGridSubregionAcronym String?
+  ElectGridSubregionName    String
+  totalOutput               ElectricityCanadaEmisTotalOutput
+}
+
+model electricity_us_emis {
+  id                        String                       @id @default(auto()) @map("_id") @db.ObjectId
+  ElectGridSubregionAcronym String
+  ElectGridSubregionName    String
+  nonBaseload               ElectricityUsEmisNonBaseload
+  totalOutput               ElectricityUsEmisTotalOutput
+}
+
+model gases_gwp {
+  id  String @id @default(auto()) @map("_id") @db.ObjectId
+  gas String
+  gwp Float
+}
+
+model mb_combus_ch4_n2o_emis {
+  id          String                @id @default(auto()) @map("_id") @db.ObjectId
+  CH4         MbCombusCh4N2OEmisCh4
+  N2O         MbCombusCh4N2OEmisN2O
+  vehicleType String
+  year        Int
+}
+
+model mb_combus_co2_emis {
+  id       String             @id @default(auto()) @map("_id") @db.ObjectId
+  CO2      MbCombusCo2EmisCo2
+  fuelType String
+}
+
+model scp3_cat4_upstream_trans_cat9_downstream_trans {
+  id          String                                      @id @default(auto()) @map("_id") @db.ObjectId
+  CH4         Scp3Cat4UpstreamTransCat9DownstreamTransCh4
+  CO2         Scp3Cat4UpstreamTransCat9DownstreamTransCo2
+  N2O         Scp3Cat4UpstreamTransCat9DownstreamTransN2O
+  vehicleType String
+}
+
+model scp3_cat5_waste_ops_cat12_endlife_sold_prd {
+  id        String                                       @id @default(auto()) @map("_id") @db.ObjectId
+  emisUnit  String
+  emisValue Scp3Cat5WasteOpsCat12EndlifeSoldPrdEmisValue
+}
+
+model scp3_cat6_busin_travel_cat7_emp_commute {
+  id          String                               @id @default(auto()) @map("_id") @db.ObjectId
+  CH4         Scp3Cat6BusinTravelCat7EmpCommuteCh4
+  CO2         Scp3Cat6BusinTravelCat7EmpCommuteCo2
+  N2O         Scp3Cat6BusinTravelCat7EmpCommuteN2O
+  vehicleType String
 }
 
 model st_combus_hc {
@@ -37,4 +252,33 @@ model st_combus_hc_emis {
   N2O         StCombusHcEmisN2O
   fuelSubtype String
   fuelType    String
+}
+
+model st_combus_quant_emis {
+  id          String               @id @default(auto()) @map("_id") @db.ObjectId
+  CH4         StCombusQuantEmisCh4
+  CO2         StCombusQuantEmisCo2
+  N2O         StCombusQuantEmisN2O
+  fuelSubtype String
+  fuelType    String
+}
+
+model steam_emis {
+  id     String       @id @default(auto()) @map("_id") @db.ObjectId
+  CH4    SteamEmisCh4
+  CO2    SteamEmisCo2
+  N2O    SteamEmisN2O
+  source String
+}
+
+model supply_chain_emis_price_based {
+  id                           String @id @default(auto()) @map("_id") @db.ObjectId
+  NAICSCode                    Int    @map("2017NAICSCode")
+  NAICSTitle                   String @map("2017NAICSTitle")
+  GHG                          String
+  Unit                         String
+  Year                         Int
+  supplyChainEmisWithMargin    Float
+  supplyChainEmisWithoutMargin Float
+  supplyChainMargin            Float
 }

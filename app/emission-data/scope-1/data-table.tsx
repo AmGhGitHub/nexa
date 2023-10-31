@@ -75,9 +75,9 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center py-4 space-x-5">
-        {filterNames &&
-          filterNames.map((filterName) => (
+      {filterNames && (
+        <div className="flex items-center py-4 space-x-5">
+          {filterNames.map((filterName) => (
             <Input
               key={filterName.name}
               placeholder={filterName.placeholder}
@@ -91,16 +91,17 @@ export function DataTable<TData, TValue>({
                   .getColumn(filterName.name)
                   ?.setFilterValue(event.target.value)
               }
-              className="max-w-[250px]"
+              className="max-w-[250px] text-blue-500"
             />
           ))}
-      </div>
+        </div>
+      )}
 
       <div className="rounded-md border">
         <Table className="overflow-x-auto">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow key={headerGroup.id} className="bg-zinc-300 text-black">
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead key={header.id}>

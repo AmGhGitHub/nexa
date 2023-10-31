@@ -3,13 +3,22 @@ import {
   colStCombusHCEmis,
   colStCombusHC,
   colStCombusQuantEmis,
+  colGasesGWP,
+  colBlendedRefrigerantsGWP,
 } from "./columns";
 import { DataTable } from "./data-table";
 
-const page = async () => {
-  const data = await axios
-    .get("http://localhost:3000/api/emission-data/scope-1")
-    .then((res) => res.data);
+const EmisFactorData = async () => {
+  const response = await axios.get(
+    "http://localhost:3000/api/emission-data/scope-1"
+  );
+  const {
+    st_combus_heat_cont,
+    st_combus_hc_emis,
+    st_combus_quant_emis,
+    gases_gwp,
+    blended_refrigerants_gwp,
+  } = response.data;
 
   return (
     <div className="container mx-auto">
@@ -21,7 +30,7 @@ const page = async () => {
       </h2>
       <DataTable
         columns={colStCombusHC}
-        data={data.heatContentData}
+        data={st_combus_heat_cont}
         filterNames={[
           { name: "fuelType", placeholder: "Fuel Type..." },
           { name: "fuelSubtype", placeholder: "Fuel SubType.." },
@@ -33,7 +42,7 @@ const page = async () => {
       </h2>
       <DataTable
         columns={colStCombusHCEmis}
-        data={data.emisDataHcBased}
+        data={st_combus_hc_emis}
         filterNames={[
           { name: "fuelType", placeholder: "Fuel Type..." },
           { name: "fuelSubtype", placeholder: "Fuel SubType.." },
@@ -45,10 +54,31 @@ const page = async () => {
       </h2>
       <DataTable
         columns={colStCombusQuantEmis}
-        data={data.st_combus_quant_emis}
+        data={st_combus_quant_emis}
+        filterNames={[
+          { name: "fuelType", placeholder: "Fuel Type..." },
+          { name: "fuelSubtype", placeholder: "Fuel SubType.." },
+        ]}
+      />
+
+      <h2 className="my-5 font-semibold text-xl text-emerald-700">
+        Gases Global Warming Potential
+      </h2>
+      <DataTable
+        columns={colGasesGWP}
+        data={gases_gwp}
+        filterNames={[{ name: "gas", placeholder: "Gas..." }]}
+      />
+
+      <h2 className="my-5 font-semibold text-xl text-emerald-700">
+        Blended Refrigerants Global Warming Potential
+      </h2>
+      <DataTable
+        columns={colBlendedRefrigerantsGWP}
+        data={blended_refrigerants_gwp}
       />
     </div>
   );
 };
 
-export default page;
+export default EmisFactorData;
