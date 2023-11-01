@@ -152,10 +152,10 @@ export const colCanadaElectricityGridEmis = [
     header: "Total Output",
     columns: [
       columnHelperElectUsEmis.accessor((row) => row.totalOutput.CO2.emisValue, {
-        header: "CO2 (lb/MWh)",
+        header: "CO2 (kg/kwh)",
       }),
       columnHelperElectUsEmis.accessor((row) => row.totalOutput.CH4.emisValue, {
-        header: "CH4 (lb/MWh)",
+        header: "CH4 (kg/kwh)",
       }),
       columnHelperElectUsEmis.accessor((row) => row.totalOutput.N2O.emisValue, {
         header: "N2O (lb/MWh)",
