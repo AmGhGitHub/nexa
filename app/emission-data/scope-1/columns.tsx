@@ -5,8 +5,11 @@ import {
   st_combus_hc_emis,
   st_combus_quant_emis,
   gases_gwp,
+  blended_refrigerants_gwp,
+  electricity_us_emis,
+  electricity_canada_emis,
 } from "@prisma/client";
-import { ColumnDef } from "@tanstack/react-table";
+import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import SortingButton from "./table-sorting";
 
 export const colStCombusHC: ColumnDef<st_combus_hc>[] = [
@@ -89,8 +92,74 @@ export const colGasesGWP: ColumnDef<gases_gwp>[] = [
   },
 ];
 
-export const colBlendedRefrigerantsGWP: ColumnDef<gases_gwp>[] = [
-  { accessorKey: "codeASHRAE", header: "Code ASHRAE" },
-  { accessorKey: "gwp", header: "GWP" },
-  { accessorKey: "blendComposition", header: "Blend Composition" },
+export const colBlendedRefrigerantsGWP: ColumnDef<blended_refrigerants_gwp>[] =
+  [
+    { accessorKey: "codeASHRAE", header: "Code ASHRAE" },
+    { accessorKey: "gwp", header: "GWP" },
+    { accessorKey: "blendComposition", header: "Blend Composition" },
+  ];
+
+const columnHelperElectUsEmis = createColumnHelper<electricity_us_emis>();
+
+export const colUSElectricityGridEmis = [
+  columnHelperElectUsEmis.accessor((row) => row.ElectGridSubregionName, {
+    header: "Region Name",
+  }),
+  columnHelperElectUsEmis.accessor((row) => row.ElectGridSubregionAcronym, {
+    header: "Acronym",
+  }),
+  columnHelperElectUsEmis.group({
+    header: "Total Output",
+    columns: [
+      columnHelperElectUsEmis.accessor((row) => row.totalOutput.CO2.emisValue, {
+        header: "CO2 (lb/MWh)",
+      }),
+      columnHelperElectUsEmis.accessor((row) => row.totalOutput.CH4.emisValue, {
+        header: "CH4 (lb/MWh)",
+      }),
+      columnHelperElectUsEmis.accessor((row) => row.totalOutput.N2O.emisValue, {
+        header: "N2O (lb/MWh)",
+      }),
+    ],
+  }),
+  columnHelperElectUsEmis.group({
+    header: "Non-Baseload",
+    columns: [
+      columnHelperElectUsEmis.accessor((row) => row.nonBaseload.CO2.emisValue, {
+        header: "CO2 (lb/MWh)",
+      }),
+      columnHelperElectUsEmis.accessor((row) => row.nonBaseload.CH4.emisValue, {
+        header: "CH4 (lb/MWh)",
+      }),
+      columnHelperElectUsEmis.accessor((row) => row.nonBaseload.N2O.emisValue, {
+        header: "N2O (lb/MWh)",
+      }),
+    ],
+  }),
+];
+
+const columnHelperElectCanadaEmis =
+  createColumnHelper<electricity_canada_emis>();
+
+export const colCanadaElectricityGridEmis = [
+  columnHelperElectCanadaEmis.accessor((row) => row.ElectGridSubregionName, {
+    header: "Region Name",
+  }),
+  columnHelperElectCanadaEmis.accessor((row) => row.ElectGridSubregionAcronym, {
+    header: "Acronym",
+  }),
+  columnHelperElectUsEmis.group({
+    header: "Total Output",
+    columns: [
+      columnHelperElectUsEmis.accessor((row) => row.totalOutput.CO2.emisValue, {
+        header: "CO2 (lb/MWh)",
+      }),
+      columnHelperElectUsEmis.accessor((row) => row.totalOutput.CH4.emisValue, {
+        header: "CH4 (lb/MWh)",
+      }),
+      columnHelperElectUsEmis.accessor((row) => row.totalOutput.N2O.emisValue, {
+        header: "N2O (lb/MWh)",
+      }),
+    ],
+  }),
 ];

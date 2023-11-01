@@ -1,10 +1,13 @@
 import axios from "axios";
+
 import {
   colStCombusHCEmis,
   colStCombusHC,
   colStCombusQuantEmis,
   colGasesGWP,
   colBlendedRefrigerantsGWP,
+  colUSElectricityGridEmis,
+  colCanadaElectricityGridEmis,
 } from "./columns";
 import { DataTable } from "./data-table";
 
@@ -18,6 +21,8 @@ const EmisFactorData = async () => {
     st_combus_quant_emis,
     gases_gwp,
     blended_refrigerants_gwp,
+    electricity_us_emis,
+    electricity_canada_emis,
   } = response.data;
 
   return (
@@ -76,6 +81,22 @@ const EmisFactorData = async () => {
       <DataTable
         columns={colBlendedRefrigerantsGWP}
         data={blended_refrigerants_gwp}
+      />
+
+      <h2 className="my-5 font-semibold text-xl text-emerald-700">
+        US Eelectricity Grid Emission Factors
+      </h2>
+      <DataTable
+        columns={colUSElectricityGridEmis}
+        data={electricity_us_emis}
+      />
+
+      <h2 className="my-5 font-semibold text-xl text-emerald-700">
+        Canada Eelectricity Grid Emission Factors
+      </h2>
+      <DataTable
+        columns={colCanadaElectricityGridEmis}
+        data={electricity_canada_emis}
       />
     </div>
   );
