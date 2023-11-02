@@ -1,4 +1,4 @@
-import axios from "axios";
+"use client";
 
 import {
   colStCombusHCEmis,
@@ -18,7 +18,8 @@ import {
 import { DataTable } from "./data-table";
 
 const EmisFactorData = async () => {
-  const response = await axios.get("http://localhost:3000/api/emission-data");
+  const response = await fetch("/api/emissions");
+  const data = await response.json();
   const {
     st_combus_heat_cont,
     st_combus_hc_emis,
@@ -33,7 +34,7 @@ const EmisFactorData = async () => {
     scp3_cat5_waste_ops_cat12_endlife_sold_prd,
     scp3_cat6_busin_travel_cat7_emp_commute,
     supply_chain_emis_price_based,
-  } = response.data;
+  } = data;
 
   return (
     <div className="container mx-auto">

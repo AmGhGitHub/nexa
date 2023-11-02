@@ -9,7 +9,7 @@ import { ScrollArea, ScrollBar } from "./scroll-area";
 const examples = [
   {
     name: "All Data",
-    href: "/emission-data",
+    href: "/emissions",
   },
   // {
   //   name: "Scope2",

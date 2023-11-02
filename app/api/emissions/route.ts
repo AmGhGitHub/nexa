@@ -1,6 +1,6 @@
 import prisma from "@/prisma/client";
-// import { st_combus_hc_emis, st_combus_heat_content } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
+
 
 export async function GET(request: NextRequest) {
   const st_combus_heat_cont = await prisma.st_combus_hc.findMany({});
