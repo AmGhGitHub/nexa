@@ -104,7 +104,8 @@ export function DataTable<TData, TValue>({
               <TableRow key={headerGroup.id} className="bg-zinc-300 text-black">
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    // console.log(header),
+                    <TableHead key={header.id} colSpan={header.colSpan}>
                       {header.isPlaceholder
                         ? null
                         : flexRender(

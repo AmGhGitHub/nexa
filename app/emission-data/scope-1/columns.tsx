@@ -8,6 +8,11 @@ import {
   blended_refrigerants_gwp,
   electricity_us_emis,
   electricity_canada_emis,
+  mb_combus_co2_emis,
+  mb_combus_ch4_n2o_emis,
+  scp3_cat4_upstream_trans_cat9_downstream_trans,
+  scp3_cat5_waste_ops_cat12_endlife_sold_prd,
+  scp3_cat6_busin_travel_cat7_emp_commute,
 } from "@prisma/client";
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import SortingButton from "./table-sorting";
@@ -58,6 +63,32 @@ export const colStCombusHCEmis: ColumnDef<st_combus_hc_emis>[] = [
   { accessorKey: "CH4.emisUnit", header: "CH4 Emis Unit" },
   { accessorKey: "N2O.emisValue", header: "N2O Emis" },
   { accessorKey: "N2O.emisUnit", header: "N2O Emis Unit" },
+];
+
+export const colMbCombusCO2Emis: ColumnDef<mb_combus_co2_emis>[] = [
+  {
+    accessorKey: "fuelType",
+    header: ({ column }) => (
+      <SortingButton column={column}>Fuel Type</SortingButton>
+    ),
+  },
+  { accessorKey: "CO2.emisValue", header: "CO2 Emis" },
+  { accessorKey: "CO2.emisUnit", header: "Emis Unit" },
+];
+
+export const colMbCombusCH4N2OEmis: ColumnDef<mb_combus_ch4_n2o_emis>[] = [
+  {
+    accessorKey: "vehicleType",
+    header: ({ column }) => (
+      <SortingButton column={column}>Vehicle Type</SortingButton>
+    ),
+  },
+  {
+    accessorKey: "year",
+    header: ({ column }) => <SortingButton column={column}>Year</SortingButton>,
+  },
+  { accessorKey: "CH4.emisValue", header: "CO2 Emis (grCH4/mile)" },
+  { accessorKey: "N2O.emisValue", header: "CO2 Emis (grN2O/mile)" },
 ];
 
 export const colStCombusQuantEmis: ColumnDef<st_combus_quant_emis>[] = [
@@ -143,23 +174,54 @@ const columnHelperElectCanadaEmis =
 
 export const colCanadaElectricityGridEmis = [
   columnHelperElectCanadaEmis.accessor((row) => row.ElectGridSubregionName, {
-    header: "Region Name",
+    header: "Province Name",
   }),
-  columnHelperElectCanadaEmis.accessor((row) => row.ElectGridSubregionAcronym, {
-    header: "Acronym",
-  }),
-  columnHelperElectUsEmis.group({
+
+  columnHelperElectCanadaEmis.group({
     header: "Total Output",
     columns: [
-      columnHelperElectUsEmis.accessor((row) => row.totalOutput.CO2.emisValue, {
-        header: "CO2 (kg/kwh)",
-      }),
-      columnHelperElectUsEmis.accessor((row) => row.totalOutput.CH4.emisValue, {
-        header: "CH4 (kg/kwh)",
-      }),
-      columnHelperElectUsEmis.accessor((row) => row.totalOutput.N2O.emisValue, {
-        header: "N2O (lb/MWh)",
-      }),
+      columnHelperElectCanadaEmis.accessor(
+        (row) => row.totalOutput.CO2.emisValue,
+        {
+          header: "CO2 (kg/kwh)",
+        }
+      ),
+      columnHelperElectCanadaEmis.accessor(
+        (row) => row.totalOutput.CH4.emisValue,
+        {
+          header: "CH4 (kg/kwh)",
+        }
+      ),
+      columnHelperElectCanadaEmis.accessor(
+        (row) => row.totalOutput.N2O.emisValue,
+        {
+          header: "N2O (lb/MWh)",
+        }
+      ),
     ],
   }),
 ];
+
+export const colScope3Cat4Cat9: ColumnDef<scp3_cat4_upstream_trans_cat9_downstream_trans>[] =
+  [
+    {
+      accessorKey: "vehicleType",
+      header: ({ column }) => (
+        <SortingButton column={column}>Vehicle Type</SortingButton>
+      ),
+    },
+    { accessorKey: "CO2.emisValue", header: "CO2 Emis" },
+    { accessorKey: "CO2.emisUnit", header: "CO2 Emis Unit" },
+    { accessorKey: "CH4.emisValue", header: "CH4 Emis" },
+    { accessorKey: "CH4.emisUnit", header: "CH4 Emis Unit" },
+    { accessorKey: "N2O.emisValue", header: "N2O Emis" },
+    { accessorKey: "N2O.emisUnit", header: "N2O Emis Unit" },
+  ];
+
+export const colScope3Cat5Cat12: ColumnDef<scp3_cat5_waste_ops_cat12_endlife_sold_prd>[] =
+  [
+    { accessorKey: "emisValue.recycled", header: "Recycle" },
+    { accessorKey: "emisValue.landfilled", header: "Land fill" },
+    { accessorKey: "emisValue.combusted", header: "Combusted" },
+    { accessorKey: "emisValue.composted", header: "Composted" },
+  ];

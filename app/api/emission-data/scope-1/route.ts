@@ -20,6 +20,10 @@ export async function GET(request: NextRequest) {
 
   const scp3_cat4_upstream_trans_cat9_downstream_trans =
     await prisma.scp3_cat4_upstream_trans_cat9_downstream_trans.findMany({});
+  const scp3_cat5_waste_ops_cat12_endlife_sold_prd =
+    await prisma.scp3_cat5_waste_ops_cat12_endlife_sold_prd.findMany({});
+  const scp3_cat6_busin_travel_cat7_emp_commute =
+    await prisma.scp3_cat6_busin_travel_cat7_emp_commute.findMany({});
 
   return NextResponse.json({
     st_combus_heat_cont,
@@ -30,5 +34,9 @@ export async function GET(request: NextRequest) {
     electricity_us_emis,
     electricity_canada_emis,
     scp3_cat4_upstream_trans_cat9_downstream_trans,
+    scp3_cat5_waste_ops_cat12_endlife_sold_prd,
+    scp3_cat6_busin_travel_cat7_emp_commute,
+    mb_combus_co2_emis,
+    mb_combus_ch4_n2o_emis,
   });
 }

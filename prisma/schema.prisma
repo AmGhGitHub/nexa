@@ -181,10 +181,9 @@ model blended_refrigerants_gwp {
 }
 
 model electricity_canada_emis {
-  id                        String                           @id @default(auto()) @map("_id") @db.ObjectId
-  ElectGridSubregionAcronym String?
-  ElectGridSubregionName    String
-  totalOutput               ElectricityCanadaEmisTotalOutput
+  id                     String                           @id @default(auto()) @map("_id") @db.ObjectId
+  ElectGridSubregionName String
+  totalOutput            ElectricityCanadaEmisTotalOutput
 }
 
 model electricity_us_emis {

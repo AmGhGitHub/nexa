@@ -8,6 +8,10 @@ import {
   colBlendedRefrigerantsGWP,
   colUSElectricityGridEmis,
   colCanadaElectricityGridEmis,
+  colMbCombusCO2Emis,
+  colMbCombusCH4N2OEmis,
+  colScope3Cat4Cat9,
+  colScope3Cat5Cat12,
 } from "./columns";
 import { DataTable } from "./data-table";
 
@@ -23,6 +27,11 @@ const EmisFactorData = async () => {
     blended_refrigerants_gwp,
     electricity_us_emis,
     electricity_canada_emis,
+    mb_combus_co2_emis,
+    mb_combus_ch4_n2o_emis,
+    scp3_cat4_upstream_trans_cat9_downstream_trans,
+    scp3_cat5_waste_ops_cat12_endlife_sold_prd,
+    scp3_cat6_busin_travel_cat7_emp_commute,
   } = response.data;
 
   return (
@@ -41,7 +50,6 @@ const EmisFactorData = async () => {
           { name: "fuelSubtype", placeholder: "Fuel SubType.." },
         ]}
       />
-
       <h2 className="my-5 font-semibold text-xl text-emerald-700">
         Emission Factors by Heat Content
       </h2>
@@ -53,7 +61,6 @@ const EmisFactorData = async () => {
           { name: "fuelSubtype", placeholder: "Fuel SubType.." },
         ]}
       />
-
       <h2 className="my-5 font-semibold text-xl text-emerald-700">
         Emission Factors by Quantity
       </h2>
@@ -65,6 +72,19 @@ const EmisFactorData = async () => {
           { name: "fuelSubtype", placeholder: "Fuel SubType.." },
         ]}
       />
+      <h2 className="my-5 font-semibold text-xl text-emerald-700">
+        Mobile CO2 Emission
+      </h2>
+      <DataTable columns={colMbCombusCO2Emis} data={mb_combus_co2_emis} />
+
+      <h2 className="my-5 font-semibold text-xl text-emerald-700">
+        Mobile CH4 & N2O Emission
+      </h2>
+      <DataTable
+        columns={colMbCombusCH4N2OEmis}
+        data={mb_combus_ch4_n2o_emis}
+        filterNames={[{ name: "vehicleType", placeholder: "Vehicle Type..." }]}
+      />
 
       <h2 className="my-5 font-semibold text-xl text-emerald-700">
         Gases Global Warming Potential
@@ -74,7 +94,6 @@ const EmisFactorData = async () => {
         data={gases_gwp}
         filterNames={[{ name: "gas", placeholder: "Gas..." }]}
       />
-
       <h2 className="my-5 font-semibold text-xl text-emerald-700">
         Blended Refrigerants Global Warming Potential
       </h2>
@@ -82,21 +101,36 @@ const EmisFactorData = async () => {
         columns={colBlendedRefrigerantsGWP}
         data={blended_refrigerants_gwp}
       />
-
       <h2 className="my-5 font-semibold text-xl text-emerald-700">
-        US Eelectricity Grid Emission Factors
+        US Electricity Grid Emission Factors
       </h2>
       <DataTable
         columns={colUSElectricityGridEmis}
         data={electricity_us_emis}
       />
-
       <h2 className="my-5 font-semibold text-xl text-emerald-700">
-        Canada Eelectricity Grid Emission Factors
+        Canada Electricity Grid Emission Factors
       </h2>
       <DataTable
         columns={colCanadaElectricityGridEmis}
         data={electricity_canada_emis}
+      />
+
+      <h2 className="my-5 font-semibold text-xl text-emerald-700">
+        Upstream and Downstream Transportation Emission Factors
+      </h2>
+      <DataTable
+        columns={colScope3Cat4Cat9}
+        data={scp3_cat4_upstream_trans_cat9_downstream_trans}
+        filterNames={[{ name: "vehicleType", placeholder: "Vehicle Type..." }]}
+      />
+
+      <h2 className="my-5 font-semibold text-xl text-emerald-700">
+        Upstream and Downstream Transportation Emission Factors
+      </h2>
+      <DataTable
+        columns={colScope3Cat5Cat12}
+        data={scp3_cat5_waste_ops_cat12_endlife_sold_prd}
       />
     </div>
   );
