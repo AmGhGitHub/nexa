@@ -101,16 +101,12 @@ type Scp3Cat4UpstreamTransCat9DownstreamTransN2O {
 }
 
 type Scp3Cat5WasteOpsCat12EndlifeSoldPrdEmisValue {
-  anaerobicallyDigested Scp3Cat5WasteOpsCat12EndlifeSoldPrdEmisValueAnaerobicallyDigested?
-  combusted             Float?
-  composted             Float?
-  landfilled            Float
-  recycled              Float?
-}
-
-type Scp3Cat5WasteOpsCat12EndlifeSoldPrdEmisValueAnaerobicallyDigested {
-  dry Float
-  wet Float?
+  combusted   Float?
+  composted   Float?
+  dryDigested Float?
+  landfilled  Float
+  recycled    Float?
+  wetDigested Float?
 }
 
 type Scp3Cat6BusinTravelCat7EmpCommuteCh4 {
@@ -226,6 +222,7 @@ model scp3_cat5_waste_ops_cat12_endlife_sold_prd {
   id        String                                       @id @default(auto()) @map("_id") @db.ObjectId
   emisUnit  String
   emisValue Scp3Cat5WasteOpsCat12EndlifeSoldPrdEmisValue
+  material  String
 }
 
 model scp3_cat6_busin_travel_cat7_emp_commute {

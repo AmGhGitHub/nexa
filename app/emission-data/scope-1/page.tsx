@@ -12,6 +12,7 @@ import {
   colMbCombusCH4N2OEmis,
   colScope3Cat4Cat9,
   colScope3Cat5Cat12,
+  colScope3Cat6Cat7,
 } from "./columns";
 import { DataTable } from "./data-table";
 
@@ -76,7 +77,6 @@ const EmisFactorData = async () => {
         Mobile CO2 Emission
       </h2>
       <DataTable columns={colMbCombusCO2Emis} data={mb_combus_co2_emis} />
-
       <h2 className="my-5 font-semibold text-xl text-emerald-700">
         Mobile CH4 & N2O Emission
       </h2>
@@ -85,7 +85,6 @@ const EmisFactorData = async () => {
         data={mb_combus_ch4_n2o_emis}
         filterNames={[{ name: "vehicleType", placeholder: "Vehicle Type..." }]}
       />
-
       <h2 className="my-5 font-semibold text-xl text-emerald-700">
         Gases Global Warming Potential
       </h2>
@@ -115,7 +114,6 @@ const EmisFactorData = async () => {
         columns={colCanadaElectricityGridEmis}
         data={electricity_canada_emis}
       />
-
       <h2 className="my-5 font-semibold text-xl text-emerald-700">
         Upstream and Downstream Transportation Emission Factors
       </h2>
@@ -124,13 +122,23 @@ const EmisFactorData = async () => {
         data={scp3_cat4_upstream_trans_cat9_downstream_trans}
         filterNames={[{ name: "vehicleType", placeholder: "Vehicle Type..." }]}
       />
-
       <h2 className="my-5 font-semibold text-xl text-emerald-700">
         Upstream and Downstream Transportation Emission Factors
       </h2>
       <DataTable
         columns={colScope3Cat5Cat12}
         data={scp3_cat5_waste_ops_cat12_endlife_sold_prd}
+        filterNames={[{ name: "material", placeholder: "Material..." }]}
+      />
+
+      <h2 className="my-5 font-semibold text-xl text-emerald-700">
+        Scope 3 Category 5: Waste Generated in Operations & Category 12:
+        End-of-Life Treatment of Sold Products
+      </h2>
+      <DataTable
+        columns={colScope3Cat6Cat7}
+        data={scp3_cat6_busin_travel_cat7_emp_commute}
+        filterNames={[{ name: "vehicleType", placeholder: "Vehicle..." }]}
       />
     </div>
   );

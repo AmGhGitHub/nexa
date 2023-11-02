@@ -220,8 +220,27 @@ export const colScope3Cat4Cat9: ColumnDef<scp3_cat4_upstream_trans_cat9_downstre
 
 export const colScope3Cat5Cat12: ColumnDef<scp3_cat5_waste_ops_cat12_endlife_sold_prd>[] =
   [
+    { accessorKey: "material", header: "Material" },
     { accessorKey: "emisValue.recycled", header: "Recycle" },
     { accessorKey: "emisValue.landfilled", header: "Land fill" },
     { accessorKey: "emisValue.combusted", header: "Combusted" },
     { accessorKey: "emisValue.composted", header: "Composted" },
+    { accessorKey: "emisValue.dryDigested", header: "Dry" },
+    { accessorKey: "emisValue.wetDigested", header: "Wet" },
+  ];
+
+export const colScope3Cat6Cat7: ColumnDef<scp3_cat6_busin_travel_cat7_emp_commute>[] =
+  [
+    {
+      accessorKey: "vehicleType",
+      header: ({ column }) => (
+        <SortingButton column={column}>Vehicle Type</SortingButton>
+      ),
+    },
+    { accessorKey: "CO2.emisValue", header: "CO2 Emis" },
+    { accessorKey: "CO2.emisUnit", header: "CO2 Emis Unit" },
+    { accessorKey: "CH4.emisValue", header: "CH4 Emis" },
+    { accessorKey: "CH4.emisUnit", header: "CH4 Emis Unit" },
+    { accessorKey: "N2O.emisValue", header: "N2O Emis" },
+    { accessorKey: "N2O.emisUnit", header: "N2O Emis Unit" },
   ];
