@@ -10,6 +10,7 @@ interface SortingButtonProps {
 const SortingButton: React.FC<SortingButtonProps> = ({ column, children }) => (
   <Button
     variant="ghost"
+    className="font-bold text-amber-600"
     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
   >
     {children}

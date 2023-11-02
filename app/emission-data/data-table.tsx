@@ -101,11 +101,15 @@ export function DataTable<TData, TValue>({
         <Table className="overflow-x-auto">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id} className="bg-zinc-300 text-black">
+              <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
                     // console.log(header),
-                    <TableHead key={header.id} colSpan={header.colSpan}>
+                    <TableHead
+                      key={header.id}
+                      colSpan={header.colSpan}
+                      className="font-bold text-amber-600"
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(

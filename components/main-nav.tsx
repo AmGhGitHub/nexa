@@ -8,17 +8,17 @@ import { ScrollArea, ScrollBar } from "./scroll-area";
 
 const examples = [
   {
-    name: "Scope1",
-    href: "/emission-data/scope-1",
+    name: "All Data",
+    href: "/emission-data",
   },
-  {
-    name: "Scope2",
-    href: "/emission-data/scope-2",
-  },
-  {
-    name: "Scope3",
-    href: "/emission-data/scope-3",
-  },
+  // {
+  //   name: "Scope2",
+  //   href: "/emission-data/scope-2",
+  // },
+  // {
+  //   name: "Scope3",
+  //   href: "/emission-data/scope-3",
+  // },
 ];
 
 interface EmissionDataNavProps extends React.HTMLAttributes<HTMLDivElement> {}

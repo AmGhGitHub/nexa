@@ -13,6 +13,7 @@ import {
   scp3_cat4_upstream_trans_cat9_downstream_trans,
   scp3_cat5_waste_ops_cat12_endlife_sold_prd,
   scp3_cat6_busin_travel_cat7_emp_commute,
+  supply_chain_emis_price_based,
 } from "@prisma/client";
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import SortingButton from "./table-sorting";
@@ -243,4 +244,27 @@ export const colScope3Cat6Cat7: ColumnDef<scp3_cat6_busin_travel_cat7_emp_commut
     { accessorKey: "CH4.emisUnit", header: "CH4 Emis Unit" },
     { accessorKey: "N2O.emisValue", header: "N2O Emis" },
     { accessorKey: "N2O.emisUnit", header: "N2O Emis Unit" },
+  ];
+
+export const colSupplyChainEmisPriceBased: ColumnDef<supply_chain_emis_price_based>[] =
+  [
+    {
+      accessorKey: "codeNumber_2017_NAICS",
+      header: ({ column }) => (
+        <SortingButton column={column}>2017 NAICS Code</SortingButton>
+      ),
+    },
+    { accessorKey: "codeName_2017_NAICS", header: "Code Name" },
+    { accessorKey: "ghg", header: "GHG" },
+    { accessorKey: "year", header: "Year" },
+    {
+      accessorKey: "supplyChainEmisWithoutMargin",
+      header: "Supply Chain Emis Without Margin",
+    },
+    { accessorKey: "supplyChainMargin", header: "Supply Chain Margin" },
+    {
+      accessorKey: "supplyChainEmisWithMargin",
+      header: "Supply Chain Emis with Margin",
+    },
+    { accessorKey: "unit", header: "Unit" },
   ];

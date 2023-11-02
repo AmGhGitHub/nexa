@@ -269,12 +269,12 @@ model steam_emis {
 
 model supply_chain_emis_price_based {
   id                           String @id @default(auto()) @map("_id") @db.ObjectId
-  NAICSCode                    Int    @map("2017NAICSCode")
-  NAICSTitle                   String @map("2017NAICSTitle")
-  GHG                          String
-  Unit                         String
-  Year                         Int
+  codeName_2017_NAICS          String
+  codeNumber_2017_NAICS        Int
+  ghg                          String
   supplyChainEmisWithMargin    Float
   supplyChainEmisWithoutMargin Float
   supplyChainMargin            Float
+  unit                         String
+  year                         Int
 }

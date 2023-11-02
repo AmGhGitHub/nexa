@@ -17,11 +17,11 @@ import { ReactNode } from "react";
 const layout = ({ children }: { children: ReactNode }) => {
   return (
     <>
-      <div className="flex space-x-2">
+      {/* <div className="flex space-x-2">
         <Button asChild>
           <Link href="/login">Login</Link>
         </Button>
-      </div>
+      </div> */}
       <div className="flex space-x-2">{children}</div>;
     </>
   );

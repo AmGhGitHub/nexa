@@ -7,7 +7,7 @@ import { MainNav } from "@/components/main-nav";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Nexa Climate",
+  title: "Nexa Climate Data",
   description: "Emission data for the nexa-climate project",
 };
 

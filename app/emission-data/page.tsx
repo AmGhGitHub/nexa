@@ -13,13 +13,12 @@ import {
   colScope3Cat4Cat9,
   colScope3Cat5Cat12,
   colScope3Cat6Cat7,
+  colSupplyChainEmisPriceBased,
 } from "./columns";
 import { DataTable } from "./data-table";
 
 const EmisFactorData = async () => {
-  const response = await axios.get(
-    "http://localhost:3000/api/emission-data/scope-1"
-  );
+  const response = await axios.get("http://localhost:3000/api/emission-data");
   const {
     st_combus_heat_cont,
     st_combus_hc_emis,
@@ -33,12 +32,13 @@ const EmisFactorData = async () => {
     scp3_cat4_upstream_trans_cat9_downstream_trans,
     scp3_cat5_waste_ops_cat12_endlife_sold_prd,
     scp3_cat6_busin_travel_cat7_emp_commute,
+    supply_chain_emis_price_based,
   } = response.data;
 
   return (
     <div className="container mx-auto">
       <h1 className="my-5 font-semibold text-5xl text-red-900 text-center">
-        Scope-1 Fuel Data
+        All Emission Data
       </h1>
       <h2 className="my-5 font-semibold text-xl text-emerald-700">
         Heat Content Data
@@ -139,6 +139,15 @@ const EmisFactorData = async () => {
         columns={colScope3Cat6Cat7}
         data={scp3_cat6_busin_travel_cat7_emp_commute}
         filterNames={[{ name: "vehicleType", placeholder: "Vehicle..." }]}
+      />
+      <h2 className="my-5 font-semibold text-xl text-emerald-700">
+        Supply Chain Greenhouse Gas Emission Factors for US Industries and
+        Commodities
+      </h2>
+      <DataTable
+        columns={colSupplyChainEmisPriceBased}
+        data={supply_chain_emis_price_based}
+        // filterNames={[{ name: "vehicleType", placeholder: "Vehicle..." }]}
       />
     </div>
   );

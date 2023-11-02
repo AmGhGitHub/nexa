@@ -25,6 +25,9 @@ export async function GET(request: NextRequest) {
   const scp3_cat6_busin_travel_cat7_emp_commute =
     await prisma.scp3_cat6_busin_travel_cat7_emp_commute.findMany({});
 
+  const supply_chain_emis_price_based =
+    await prisma.supply_chain_emis_price_based.findMany({});
+
   return NextResponse.json({
     st_combus_heat_cont,
     st_combus_hc_emis,
@@ -38,5 +41,6 @@ export async function GET(request: NextRequest) {
     scp3_cat6_busin_travel_cat7_emp_commute,
     mb_combus_co2_emis,
     mb_combus_ch4_n2o_emis,
+    supply_chain_emis_price_based,
   });
 }
