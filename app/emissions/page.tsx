@@ -21,6 +21,7 @@ import {
 import { DataTable } from "./data-table";
 
 const EmisFactorData = async () => {
+  // prisma
   const st_combus_heat_cont = await prisma.st_combus_hc.findMany({});
   const st_combus_hc_emis = await prisma.st_combus_hc_emis.findMany({});
   const st_combus_quant_emis = await prisma.st_combus_quant_emis.findMany({});
