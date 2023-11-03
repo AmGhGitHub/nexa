@@ -21,24 +21,6 @@ import {
 import { DataTable } from "./data-table";
 
 const EmisFactorData = async () => {
-  // const response = await axios.get("http://localhost:3000/api/emissions");
-  // // const response = await axios.get("/api/emissions");
-  // const data = await response.data;
-  // const {
-  //   st_combus_heat_cont,
-  //   st_combus_hc_emis,
-  //   st_combus_quant_emis,
-  //   gases_gwp,
-  //   blended_refrigerants_gwp,
-  //   electricity_us_emis,
-  //   electricity_canada_emis,
-  //   mb_combus_co2_emis,
-  //   mb_combus_ch4_n2o_emis,
-  //   scp3_cat4_upstream_trans_cat9_downstream_trans,
-  //   scp3_cat5_waste_ops_cat12_endlife_sold_prd,
-  //   scp3_cat6_busin_travel_cat7_emp_commute,
-  //   supply_chain_emis_price_based,
-  // } = data;
   const st_combus_heat_cont = await prisma.st_combus_hc.findMany({});
   const st_combus_hc_emis = await prisma.st_combus_hc_emis.findMany({});
   const st_combus_quant_emis = await prisma.st_combus_quant_emis.findMany({});
