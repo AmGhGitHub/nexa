@@ -17,6 +17,8 @@ import {
   colScope3Cat5Cat12,
   colScope3Cat6Cat7,
   colSupplyChainEmisPriceBased,
+  colOnRoadGasolineVehicles,
+  colOnRoadDieselVehicles,
 } from "./columns";
 import { DataTable } from "./data-table";
 
@@ -29,6 +31,12 @@ const EmisFactorData = async () => {
   const mb_combus_ch4_n2o_emis = await prisma.mb_combus_ch4_n2o_emis.findMany(
     {}
   );
+  const on_road_diesel_and_other_vehicles_ch4_n2o_emis =
+    await prisma.on_road_diesel_other_vehicles_ch4_n2o_emis.findMany({});
+
+  const on_road_gasoline_vehicles_ch4_n2o_emis =
+    await prisma.on_road_gasoline_vehicles_ch4_n2o_emis.findMany({});
+
   const gases_gwp = await prisma.gases_gwp.findMany({});
   const blended_refrigerants_gwp =
     await prisma.blended_refrigerants_gwp.findMany({});
@@ -46,8 +54,10 @@ const EmisFactorData = async () => {
 
   const supply_chain_emis_price_based =
     await prisma.supply_chain_emis_price_based.findMany({});
+  // console.log("supply_chain_emis_price_based", electricity_us_emis);
 
   return (
+    // console.log("emisFactorData"),
     <div className="container mx-auto">
       <h1 className="my-5 font-semibold text-5xl text-red-900 text-center">
         All Emission Data
@@ -86,6 +96,21 @@ const EmisFactorData = async () => {
         ]}
       />
       <h2 className="my-5 font-semibold text-xl text-emerald-700">
+        Mobile Combustion CH4 and N2O for On-Road Gasoline Vehicles
+      </h2>
+      <DataTable
+        columns={colOnRoadGasolineVehicles}
+        data={on_road_gasoline_vehicles_ch4_n2o_emis}
+      />
+      <h2 className="my-5 font-semibold text-xl text-emerald-700">
+        Mobile Combustion CH4 and N2O for On-Road Diesel and Alternative Fuel
+        Vehicles
+      </h2>
+      <DataTable
+        columns={colOnRoadDieselVehicles}
+        data={on_road_diesel_and_other_vehicles_ch4_n2o_emis}
+      />
+      <h2 className="my-5 font-semibold text-xl text-emerald-700">
         Mobile CO2 Emission
       </h2>
       <DataTable columns={colMbCombusCO2Emis} data={mb_combus_co2_emis} />
@@ -115,6 +140,7 @@ const EmisFactorData = async () => {
       <h2 className="my-5 font-semibold text-xl text-emerald-700">
         US Electricity Grid Emission Factors
       </h2>
+      {/* console.log(electricity_us_emis) */}
       <DataTable
         columns={colUSElectricityGridEmis}
         data={electricity_us_emis}
@@ -135,14 +161,13 @@ const EmisFactorData = async () => {
         filterNames={[{ name: "vehicleType", placeholder: "Vehicle Type..." }]}
       />
       <h2 className="my-5 font-semibold text-xl text-emerald-700">
-        Upstream and Downstream Transportation Emission Factors
+        Waste Generated in Operations and End-of-Life Treatment of Sold Products
       </h2>
       <DataTable
         columns={colScope3Cat5Cat12}
         data={scp3_cat5_waste_ops_cat12_endlife_sold_prd}
         filterNames={[{ name: "material", placeholder: "Material..." }]}
       />
-
       <h2 className="my-5 font-semibold text-xl text-emerald-700">
         Scope 3 Category 5: Waste Generated in Operations & Category 12:
         End-of-Life Treatment of Sold Products

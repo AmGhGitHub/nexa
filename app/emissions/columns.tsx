@@ -4,6 +4,8 @@ import {
   st_combus_hc,
   st_combus_hc_emis,
   st_combus_quant_emis,
+  on_road_diesel_other_vehicles_ch4_n2o_emis,
+  on_road_gasoline_vehicles_ch4_n2o_emis,
   gases_gwp,
   blended_refrigerants_gwp,
   electricity_us_emis,
@@ -92,6 +94,54 @@ export const colMbCombusCH4N2OEmis: ColumnDef<mb_combus_ch4_n2o_emis>[] = [
   { accessorKey: "N2O.emisValue", header: "CO2 Emis (grN2O/mile)" },
 ];
 
+export const colOnRoadGasolineVehicles: ColumnDef<on_road_gasoline_vehicles_ch4_n2o_emis>[] =
+  [
+    {
+      accessorKey: "vehicleType",
+      header: ({ column }) => (
+        <SortingButton column={column}>Vehicle Type</SortingButton>
+      ),
+    },
+    {
+      accessorKey: "year",
+      header: ({ column }) => (
+        <SortingButton column={column}>Year</SortingButton>
+      ),
+    },
+
+    { accessorKey: "CH4.emisValue", header: "CH4 Emis" },
+    { accessorKey: "CH4.emisUnit", header: "CH4 Emis Unit" },
+    { accessorKey: "N2O.emisValue", header: "N2O Emis" },
+    { accessorKey: "N2O.emisUnit", header: "N2O Emis Unit" },
+  ];
+
+export const colOnRoadDieselVehicles: ColumnDef<on_road_diesel_other_vehicles_ch4_n2o_emis>[] =
+  [
+    {
+      accessorKey: "vehicleType",
+      header: ({ column }) => (
+        <SortingButton column={column}>Vehicle Type</SortingButton>
+      ),
+    },
+    {
+      accessorKey: "fuelType",
+      header: ({ column }) => (
+        <SortingButton column={column}>Fuel Type</SortingButton>
+      ),
+    },
+    {
+      accessorKey: "vehicleYear",
+      header: ({ column }) => (
+        <SortingButton column={column}>Year</SortingButton>
+      ),
+    },
+
+    { accessorKey: "CH4.emisValue", header: "CH4 Emis" },
+    { accessorKey: "CH4.emisUnit", header: "CH4 Emis Unit" },
+    { accessorKey: "N2O.emisValue", header: "N2O Emis" },
+    { accessorKey: "N2O.emisUnit", header: "N2O Emis Unit" },
+  ];
+
 export const colStCombusQuantEmis: ColumnDef<st_combus_quant_emis>[] = [
   {
     accessorKey: "fuelType",
@@ -158,13 +208,13 @@ export const colUSElectricityGridEmis = [
     header: "Non-Baseload",
     columns: [
       columnHelperElectUsEmis.accessor((row) => row.nonBaseload.CO2.emisValue, {
-        header: "CO2 (lb/MWh)",
+        header: "CO2(lb/MWh)",
       }),
       columnHelperElectUsEmis.accessor((row) => row.nonBaseload.CH4.emisValue, {
-        header: "CH4 (lb/MWh)",
+        header: "CH4(lb/MWh)",
       }),
       columnHelperElectUsEmis.accessor((row) => row.nonBaseload.N2O.emisValue, {
-        header: "N2O (lb/MWh)",
+        header: "N2O(lb/MWh)",
       }),
     ],
   }),
@@ -196,7 +246,7 @@ export const colCanadaElectricityGridEmis = [
       columnHelperElectCanadaEmis.accessor(
         (row) => row.totalOutput.N2O.emisValue,
         {
-          header: "N2O (lb/MWh)",
+          header: "N2O (kg/kwh)",
         }
       ),
     ],
@@ -222,12 +272,34 @@ export const colScope3Cat4Cat9: ColumnDef<scp3_cat4_upstream_trans_cat9_downstre
 export const colScope3Cat5Cat12: ColumnDef<scp3_cat5_waste_ops_cat12_endlife_sold_prd>[] =
   [
     { accessorKey: "material", header: "Material" },
-    { accessorKey: "emisValue.recycled", header: "Recycle" },
-    { accessorKey: "emisValue.landfilled", header: "Land fill" },
-    { accessorKey: "emisValue.combusted", header: "Combusted" },
-    { accessorKey: "emisValue.composted", header: "Composted" },
-    { accessorKey: "emisValue.dryDigested", header: "Dry" },
-    { accessorKey: "emisValue.wetDigested", header: "Wet" },
+    {
+      accessorKey: "emisValue.recycled",
+      header: "Recycle",
+    },
+    {
+      accessorKey: "emisValue.landfilled",
+      header: "Land fill",
+    },
+    {
+      accessorKey: "emisValue.combusted",
+      header: "Combusted",
+    },
+    {
+      accessorKey: "emisValue.composted",
+      header: "Composted",
+    },
+    {
+      accessorKey: "emisValue.dryDigested",
+      header: "Dry",
+    },
+    {
+      accessorKey: "emisValue.wetDigested",
+      header: "Wet",
+    },
+    {
+      accessorKey: "emisUnit",
+      header: "Emis Unit",
+    },
   ];
 
 export const colScope3Cat6Cat7: ColumnDef<scp3_cat6_busin_travel_cat7_emp_commute>[] =

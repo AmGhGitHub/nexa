@@ -85,6 +85,26 @@ type MbCombusCo2EmisCo2 {
   emisValue Float
 }
 
+type OnRoadDieselOtherVehiclesCh4N2OEmisCh4 {
+  emisUnit  String
+  emisValue Float
+}
+
+type OnRoadDieselOtherVehiclesCh4N2OEmisN2O {
+  emisUnit  String
+  emisValue Float
+}
+
+type OnRoadGasolineVehiclesCh4N2OEmisCh4 {
+  emisUnit  String
+  emisValue Float
+}
+
+type OnRoadGasolineVehiclesCh4N2OEmisN2O {
+  emisUnit  String
+  emisValue Float
+}
+
 type Scp3Cat4UpstreamTransCat9DownstreamTransCh4 {
   emisUnit  String
   emisValue Float
@@ -208,6 +228,23 @@ model mb_combus_co2_emis {
   id       String             @id @default(auto()) @map("_id") @db.ObjectId
   CO2      MbCombusCo2EmisCo2
   fuelType String
+}
+
+model on_road_diesel_other_vehicles_ch4_n2o_emis {
+  id          String                                 @id @default(auto()) @map("_id") @db.ObjectId
+  CH4         OnRoadDieselOtherVehiclesCh4N2OEmisCh4
+  N2O         OnRoadDieselOtherVehiclesCh4N2OEmisN2O
+  fuelType    String
+  vehicleType String
+  vehicleYear Int?
+}
+
+model on_road_gasoline_vehicles_ch4_n2o_emis {
+  id          String                              @id @default(auto()) @map("_id") @db.ObjectId
+  CH4         OnRoadGasolineVehiclesCh4N2OEmisCh4
+  N2O         OnRoadGasolineVehiclesCh4N2OEmisN2O
+  vehicleType String
+  year        Int
 }
 
 model scp3_cat4_upstream_trans_cat9_downstream_trans {
