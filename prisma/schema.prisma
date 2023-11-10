@@ -80,6 +80,16 @@ type MbCombusCh4N2OEmisN2O {
   emisValue Float
 }
 
+type MbCombusCh4N2ONonroadVehiclesCh4 {
+  emisUnit  String
+  emisValue Float
+}
+
+type MbCombusCh4N2ONonroadVehiclesN2O {
+  emisUnit  String
+  emisValue Float
+}
+
 type MbCombusCo2EmisCo2 {
   emisUnit  String
   emisValue Float
@@ -222,6 +232,14 @@ model mb_combus_ch4_n2o_emis {
   N2O         MbCombusCh4N2OEmisN2O
   vehicleType String
   year        Int
+}
+
+model mb_combus_ch4_n2o_nonroad_vehicles {
+  id          String                           @id @default(auto()) @map("_id") @db.ObjectId
+  CH4         MbCombusCh4N2ONonroadVehiclesCh4
+  N2O         MbCombusCh4N2ONonroadVehiclesN2O
+  fuelType    String
+  vehicleType String
 }
 
 model mb_combus_co2_emis {

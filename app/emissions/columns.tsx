@@ -16,6 +16,8 @@ import {
   scp3_cat5_waste_ops_cat12_endlife_sold_prd,
   scp3_cat6_busin_travel_cat7_emp_commute,
   supply_chain_emis_price_based,
+  mb_combus_ch4_n2o_nonroad_vehicles,
+  steam_emis,
 } from "@prisma/client";
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import SortingButton from "./table-sorting";
@@ -45,6 +47,16 @@ export const colStCombusHC: ColumnDef<st_combus_hc>[] = [
       <SortingButton column={column}>HC Unit</SortingButton>
     ),
   },
+];
+
+export const colSteamEmis: ColumnDef<steam_emis>[] = [
+  { accessorKey: "source", header: "Source" },
+  { accessorKey: "CO2.emisValue", header: "CO2 Emis" },
+  { accessorKey: "CO2.emisUnit", header: "CO2 Emis Unit" },
+  { accessorKey: "CH4.emisValue", header: "CH4 Emis" },
+  { accessorKey: "CH4.emisUnit", header: "CH4 Emis Unit" },
+  { accessorKey: "N2O.emisValue", header: "N2O Emis" },
+  { accessorKey: "N2O.emisUnit", header: "N2O Emis Unit" },
 ];
 
 export const colStCombusHCEmis: ColumnDef<st_combus_hc_emis>[] = [
@@ -290,11 +302,11 @@ export const colScope3Cat5Cat12: ColumnDef<scp3_cat5_waste_ops_cat12_endlife_sol
     },
     {
       accessorKey: "emisValue.dryDigested",
-      header: "Dry",
+      header: "Anaerobically Digested (Dry Digestate with Curing)",
     },
     {
       accessorKey: "emisValue.wetDigested",
-      header: "Wet",
+      header: "Anaerobically Digested (Wet Digestate with Curing)",
     },
     {
       accessorKey: "emisUnit",
@@ -312,6 +324,26 @@ export const colScope3Cat6Cat7: ColumnDef<scp3_cat6_busin_travel_cat7_emp_commut
     },
     { accessorKey: "CO2.emisValue", header: "CO2 Emis" },
     { accessorKey: "CO2.emisUnit", header: "CO2 Emis Unit" },
+    { accessorKey: "CH4.emisValue", header: "CH4 Emis" },
+    { accessorKey: "CH4.emisUnit", header: "CH4 Emis Unit" },
+    { accessorKey: "N2O.emisValue", header: "N2O Emis" },
+    { accessorKey: "N2O.emisUnit", header: "N2O Emis Unit" },
+  ];
+
+export const colMbCombusCH4andN2ONonroadVehicles: ColumnDef<mb_combus_ch4_n2o_nonroad_vehicles>[] =
+  [
+    {
+      accessorKey: "vehicleType",
+      header: ({ column }) => (
+        <SortingButton column={column}>Vehicle Type</SortingButton>
+      ),
+    },
+    {
+      accessorKey: "fuelType",
+      header: ({ column }) => (
+        <SortingButton column={column}>Fuel Type</SortingButton>
+      ),
+    },
     { accessorKey: "CH4.emisValue", header: "CH4 Emis" },
     { accessorKey: "CH4.emisUnit", header: "CH4 Emis Unit" },
     { accessorKey: "N2O.emisValue", header: "N2O Emis" },
