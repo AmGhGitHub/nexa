@@ -7,7 +7,6 @@ import {
   colBlendedRefrigerantsGWP,
   colCanadaElectricityGridEmis,
   colGasesGWP,
-  colMbCombusCH4N2OEmis,
   colMbCombusCO2Emis,
   colOnRoadDieselVehicles,
   colOnRoadGasolineVehicles,
@@ -21,6 +20,7 @@ import {
   colMbCombusCH4andN2ONonroadVehicles,
   colUSElectricityGridEmis,
   colSteamEmis,
+  colFireSuppressantLeakRates,
 } from "./columns";
 import { DataTable } from "./data-table";
 
@@ -32,9 +32,7 @@ const EmisFactorData = async () => {
   const st_combus_hc_emis = await prisma.st_combus_hc_emis.findMany({});
   const st_combus_quant_emis = await prisma.st_combus_quant_emis.findMany({});
   const mb_combus_co2_emis = await prisma.mb_combus_co2_emis.findMany({});
-  const mb_combus_ch4_n2o_emis = await prisma.mb_combus_ch4_n2o_emis.findMany(
-    {}
-  );
+
   const on_road_diesel_and_other_vehicles_ch4_n2o_emis =
     await prisma.on_road_diesel_other_vehicles_ch4_n2o_emis.findMany({});
 
@@ -59,6 +57,8 @@ const EmisFactorData = async () => {
   const supply_chain_emis_price_based =
     await prisma.supply_chain_emis_price_based.findMany({});
   const steam_emis = await prisma.steam_emis.findMany({});
+  const fire_suppressant_leak_rates =
+    await prisma.fire_suppressant_leak_rates.findMany({});
   // console.log("supply_chain_emis_price_based", electricity_us_emis);
 
   return (
@@ -123,6 +123,11 @@ const EmisFactorData = async () => {
       <DataTable
         columns={colOnRoadDieselVehicles}
         data={on_road_diesel_and_other_vehicles_ch4_n2o_emis}
+        filterNames={[
+          { name: "vehicleType", placeholder: "Vehicle Type..." },
+          { name: "fuelType", placeholder: "Fuel Type..." },
+          // { name: "vehicleYear", placeholder: "Year.." },
+        ]}
       />
 
       <h2 className="my-5 font-semibold text-xl text-emerald-700">
@@ -158,8 +163,7 @@ const EmisFactorData = async () => {
 
       <h2 className="my-5 font-semibold text-xl text-emerald-700">
         Table 8 - Scope 3 Category 4: Upstream Transportation and Distribution
-        and Category 9: Downstream Transportation and DistributionUpstream and
-        Downstream Transportation Emission Factors
+        and Category 9: Downstream Transportation and Distribution
       </h2>
       <DataTable
         columns={colScope3Cat4Cat9}
@@ -178,8 +182,8 @@ const EmisFactorData = async () => {
       />
 
       <h2 className="mt-16 font-semibold text-xl text-emerald-700">
-        Table 10 - Scope 3 Category 5: Waste Generated in Operations & Category
-        12: End-of-Life Treatment of Sold Products
+        Table 10 - Scope 3 Category 6: Business Travel and Category 7: Employee
+        Commuting
       </h2>
       <DataTable
         columns={colScope3Cat6Cat7}
@@ -197,11 +201,18 @@ const EmisFactorData = async () => {
       />
 
       <h2 className="my-5 font-semibold text-xl text-emerald-700">
-        Table 12 - Blended Refrigerants Global Warming Potential
+        Table 12 - Global Warming Potentials (GWPs) for Blended Refrigerants
       </h2>
       <DataTable
         columns={colBlendedRefrigerantsGWP}
         data={blended_refrigerants_gwp}
+      />
+      <h2 className="my-5 font-semibold text-xl text-emerald-700">
+        Fire Suppressant Leak Rates
+      </h2>
+      <DataTable
+        columns={colFireSuppressantLeakRates}
+        data={fire_suppressant_leak_rates}
       />
 
       <h2 className="my-5 font-semibold text-xl text-emerald-700">

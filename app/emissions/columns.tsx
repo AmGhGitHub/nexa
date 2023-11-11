@@ -18,6 +18,7 @@ import {
   supply_chain_emis_price_based,
   mb_combus_ch4_n2o_nonroad_vehicles,
   steam_emis,
+  fire_suppressant_leak_rates,
 } from "@prisma/client";
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import SortingButton from "./table-sorting";
@@ -361,6 +362,7 @@ export const colSupplyChainEmisPriceBased: ColumnDef<supply_chain_emis_price_bas
     { accessorKey: "codeName_2017_NAICS", header: "Code Name" },
     { accessorKey: "ghg", header: "GHG" },
     { accessorKey: "year", header: "Year" },
+
     {
       accessorKey: "supplyChainEmisWithoutMargin",
       header: "Supply Chain Emis Without Margin",
@@ -371,4 +373,17 @@ export const colSupplyChainEmisPriceBased: ColumnDef<supply_chain_emis_price_bas
       header: "Supply Chain Emis with Margin",
     },
     { accessorKey: "unit", header: "Unit" },
+    { accessorKey: "refUSEEIOCode", header: "Reference USEEIO Code" },
+  ];
+
+export const colFireSuppressantLeakRates: ColumnDef<fire_suppressant_leak_rates>[] =
+  [
+    {
+      accessorKey: "equipmentType",
+      header: "Equipment Type",
+    },
+    {
+      accessorKey: "leakRate",
+      header: "Leak Rate",
+    },
   ];

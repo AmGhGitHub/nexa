@@ -220,6 +220,12 @@ model electricity_us_emis {
   totalOutput               ElectricityUsEmisTotalOutput
 }
 
+model fire_suppressant_leak_rates {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  equipmentType String
+  leakRate      Float
+}
+
 model gases_gwp {
   id  String @id @default(auto()) @map("_id") @db.ObjectId
   gas String
@@ -327,6 +333,7 @@ model supply_chain_emis_price_based {
   codeName_2017_NAICS          String
   codeNumber_2017_NAICS        Int
   ghg                          String
+  refUSEEIOCode                String
   supplyChainEmisWithMargin    Float
   supplyChainEmisWithoutMargin Float
   supplyChainMargin            Float
